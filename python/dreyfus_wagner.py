@@ -8,15 +8,15 @@ import sys
 import steinlib     # local
 
 
-def powerset(s):
+def _powerset(s):
     return (c for r in range(1, len(s)) for c in itertools.combinations(s, r))
 
 
 
 # memo has key (u, list of terminals) and value (v, subset, weight)
 # TODO change those to named tuples?
-def dw_solve(G: nx.Graph, terminals, u, apsp, memo={}):
-    #pmrint(f"dw_solve {u=} {terminals=}")
+def _dw_solve(G: nx.Graph, terminals, u, apsp, memo={}):
+    #pmrint(f"_dw_solve {u=} {terminals=}")
     if (u,terminals) in memo:
         #print(f"{memo[(u,terminals)]=}")
         return memo[(u,terminals)][2]
@@ -37,17 +37,17 @@ def dw_solve(G: nx.Graph, terminals, u, apsp, memo={}):
         for v in [n for n in G.nodes]: # if G.degree[n] >= 3]:
             #print(f"{v=}")
             xvert_set = set(terminals)
-            #print(f"{powerset(terminals)=}")
-            for x in powerset(terminals):
+            #print(f"{_powerset(terminals)=}")
+            for x in _powerset(terminals):
                 xset = set(x)
                 xpset = xvert_set.difference(xset)
                 w1 = apsp[u][v]
                 if w1 >= bestweight:
                     continue
-                w2 = dw_solve(G, tuple(sorted(list(xset))), v, apsp, memo)
+                w2 = _dw_solve(G, tuple(sorted(list(xset))), v, apsp, memo)
                 if w1 + w2 >= bestweight:
                     continue
-                w3 = dw_solve(G, tuple(sorted(list(xpset))), v, apsp, memo)
+                w3 = _dw_solve(G, tuple(sorted(list(xpset))), v, apsp, memo)
                 w = w1 + w2 + w3
                 #print(f"{u=} {v=} {xset=} {xpset=} {w1=} {w2=} {w3=} {w=}")
                 if w < bestweight:
@@ -60,32 +60,35 @@ def dw_solve(G: nx.Graph, terminals, u, apsp, memo={}):
     return bestweight
 
 
-def dw_build_graph(T, terminals, u, G, memo):
+def _dw_build_graph(T, terminals, u, G, memo):
     if len(terminals) == 1:
         print(f"{terminals[0]=} {u=}") # {G[terminals[0]][u]['weight']=}")
         if terminals[0] != u:
             T.add_edge(terminals[0], u, weight=G[terminals[0]][u]["weight"])
         return
     bestv, bestsubset, _ = memo[(u, terminals)]
-    dw_build_graph(T, bestsubset, bestv, G, memo)
+    _dw_build_graph(T, bestsubset, bestv, G, memo)
     term_set = set(terminals)
     xpset = term_set.difference(bestsubset)
-    dw_build_graph(T, tuple(sorted(list(xpset))), bestv, G, memo)
+    _dw_build_graph(T, tuple(sorted(list(xpset))), bestv, G, memo)
 
 
+# This is the only external function. It takes a graph and returns:
+# - A NetworkX graph containing the optimal Steiner tree if weight_only = False
+# - The total weight of the optimal Steiner tree if weight_only = True
 def dreyfus_wagner(G: nx.Graph, weight_only=False):
     apsp = dict(nx.algorithms.shortest_paths.all_pairs_dijkstra_path_length(G))
     cache = {}
     terminals = sorted(G.graph["terminals"])
     u0 = terminals[0]
     t0 = tuple(terminals[1:])
-    weight = dw_solve(G, t0, u0, apsp, cache)
+    weight = _dw_solve(G, t0, u0, apsp, cache)
 
     if weight_only:
         return weight
 
     T = nx.Graph(Remark="Optimal Steiner tree via Dreyfus-Wagner")
-    dw_build_graph(T, tuple(terminals[1:]), terminals[0], G, cache)
+    _dw_build_graph(T, tuple(terminals[1:]), terminals[0], G, cache)
 
     bestv, _, _ = cache[(u0, t0)]
     print(f"{u0=} {bestv=}")

@@ -1,9 +1,16 @@
+# steinlib.py
+#
+# Read a Steiner tree test instance in STP (SteinLib) format into a NetworkX
+# graph. It does not handle directed graphs, obstacles, rooted or degree
+# constrained instances.
+
 import matplotlib.pyplot as plt
 import networkx as nx
 import re
 import sys
 
 
+# This is largely untested, as all of my testcases are valid STP
 class ParseError(Exception):
     """Exception raised for errors in the input.
 
@@ -17,7 +24,8 @@ class ParseError(Exception):
         self.message = message
 
 
-# no serious effort is made to handle invalid files
+# This is the main function - it takes a file object and returns a NetworkX
+# Graph
 def parse(f):
     section = None
     for rawline in f:
