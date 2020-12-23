@@ -12,18 +12,17 @@ def _powerset(s):
     return (c for r in range(1, len(s)) for c in itertools.combinations(s, r))
 
 
-
 # memo has key (u, list of terminals) and value (v, subset, weight)
 # TODO change those to named tuples?
 def _dw_solve(G: nx.Graph, terminals, u, apsp, memo={}):
     #pmrint(f"_dw_solve {u=} {terminals=}")
-    if (u,terminals) in memo:
-        #print(f"{memo[(u,terminals)]=}")
-        return memo[(u,terminals)][2]
+    if (u, terminals) in memo:
+        # print(f"{memo[(u,terminals)]=}")
+        return memo[(u, terminals)][2]
 
     if len(terminals) >= len(G.graph["terminals"]) - 2:
         print(f"{u=} {terminals=}")
-    
+
     maxweight = G.size(weight="weight")
 
     if len(terminals) == 1:
@@ -34,10 +33,10 @@ def _dw_solve(G: nx.Graph, terminals, u, apsp, memo={}):
     else:
         assert len(terminals) > 1
         bestweight = maxweight
-        for v in [n for n in G.nodes]: # if G.degree[n] >= 3]:
-            #print(f"{v=}")
+        for v in G.nodes:
+            # print(f"{v=}")
             xvert_set = set(terminals)
-            #print(f"{_powerset(terminals)=}")
+            # print(f"{_powerset(terminals)=}")
             for x in _powerset(terminals):
                 xset = set(x)
                 xpset = xvert_set.difference(xset)
@@ -56,13 +55,13 @@ def _dw_solve(G: nx.Graph, terminals, u, apsp, memo={}):
                     bestweight = w
 
     assert bestweight < maxweight
-    memo[(u,terminals)] = (bestv,bestsubset,bestweight)
+    memo[(u, terminals)] = (bestv, bestsubset, bestweight)
     return bestweight
 
 
 def _dw_build_graph(T, terminals, u, G, memo):
     if len(terminals) == 1:
-        print(f"{terminals[0]=} {u=}") # {G[terminals[0]][u]['weight']=}")
+        print(f"{terminals[0]=} {u=}")  # {G[terminals[0]][u]['weight']=}")
         if terminals[0] != u:
             T.add_edge(terminals[0], u, weight=G[terminals[0]][u]["weight"])
         return
@@ -112,5 +111,3 @@ if __name__ == "__main__":
 
     nx.draw(T)
     plt.savefig("steinlib.png")
-
-

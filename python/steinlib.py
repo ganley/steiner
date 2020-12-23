@@ -39,13 +39,14 @@ def parse(f):
                 raise ParseError(line, f"Unsupported feature {first}")
 
             if first == "33D32945":    # STP magic number
-                G = nx.Graph(STP_version = rest[-1])
+                G = nx.Graph(STP_version=rest[-1])
                 continue
 
             if first == "SECTION":
                 section = rest[0]
                 if section == "MAXIMUMDEGREES":
-                    raise ParseError(line, "Section type {section} unsupported")
+                    raise ParseError(
+                        line, "Section type {section} unsupported")
             elif first == "END":
                 section = None
             elif first in ["NODES", "EDGES", "TERMINALS"]:
@@ -59,13 +60,15 @@ def parse(f):
                 if section != "TERMINALS":
                     raise ParseError(line, "Only valid in Terminals section")
                 G.nodes[int(rest[0])]["terminal"] = True
-                G.graph["terminals"] = G.graph.get("terminals", []) + [int(rest[0])]
+                G.graph["terminals"] = G.graph.get(
+                    "terminals", []) + [int(rest[0])]
             elif re.match("D+$", first):
                 if section != "COORDINATES":
                     raise ParseError(line, "Only valid in Coordinates section")
                 if len(rest) != len(first) + 1:
                     raise ParseError(line, "Incorrect number of dimensions")
-                G.nodes[int(rest[0])]["pos"] = tuple([int(x) for x in rest[1:]])
+                G.nodes[int(rest[0])]["pos"] = tuple([int(x)
+                                                      for x in rest[1:]])
             elif section == "COMMENT":
                 G.graph[line.split()[0]] = line.split("\"")[1].strip("\"")
             else:
