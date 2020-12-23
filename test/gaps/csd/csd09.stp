@@ -1,0 +1,125 @@
+33D32945 STP File, STP Format Version 1.0
+
+SECTION Comment
+Name    "Output"
+Creator "OGDF::GraphIO::writeSTP"
+END
+
+SECTION Graph
+Nodes 45
+Edges 72
+E 1 10 1
+E 10 2 1
+E 1 11 1
+E 11 3 1
+E 1 12 1
+E 12 4 1
+E 1 13 1
+E 13 5 1
+E 1 14 1
+E 14 6 1
+E 1 15 1
+E 15 7 1
+E 1 16 1
+E 16 8 1
+E 1 17 1
+E 17 9 1
+E 2 18 1
+E 18 3 1
+E 2 19 1
+E 19 4 1
+E 2 20 1
+E 20 5 1
+E 2 21 1
+E 21 6 1
+E 2 22 1
+E 22 7 1
+E 2 23 1
+E 23 8 1
+E 2 24 1
+E 24 9 1
+E 3 25 1
+E 25 4 1
+E 3 26 1
+E 26 5 1
+E 3 27 1
+E 27 6 1
+E 3 28 1
+E 28 7 1
+E 3 29 1
+E 29 8 1
+E 3 30 1
+E 30 9 1
+E 4 31 1
+E 31 5 1
+E 4 32 1
+E 32 6 1
+E 4 33 1
+E 33 7 1
+E 4 34 1
+E 34 8 1
+E 4 35 1
+E 35 9 1
+E 5 36 1
+E 36 6 1
+E 5 37 1
+E 37 7 1
+E 5 38 1
+E 38 8 1
+E 5 39 1
+E 39 9 1
+E 6 40 1
+E 40 7 1
+E 6 41 1
+E 41 8 1
+E 6 42 1
+E 42 9 1
+E 7 43 1
+E 43 8 1
+E 7 44 1
+E 44 9 1
+E 8 45 1
+E 45 9 1
+END
+
+SECTION Terminals
+Terminals 36
+T 10
+T 11
+T 12
+T 13
+T 14
+T 15
+T 16
+T 17
+T 18
+T 19
+T 20
+T 21
+T 22
+T 23
+T 24
+T 25
+T 26
+T 27
+T 28
+T 29
+T 30
+T 31
+T 32
+T 33
+T 34
+T 35
+T 36
+T 37
+T 38
+T 39
+T 40
+T 41
+T 42
+T 43
+T 44
+T 45
+END
+
+EOF

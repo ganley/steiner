@@ -1,0 +1,19 @@
+33D32945 STP File, STP Format Version 1.0
+
+SECTION Comment
+Name    "Output"
+Creator "OGDF::GraphIO::writeSTP"
+END
+
+SECTION Graph
+Nodes 2
+Edges 1
+E 1 2 1
+END
+
+SECTION Terminals
+Terminals 1
+T 2
+END
+
+EOF
