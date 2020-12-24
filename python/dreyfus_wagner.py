@@ -91,8 +91,6 @@ def _dw_add_path(G, u, v, H):
 
 # build the Steiner tree from the optimal decompositions stored in the
 # memoization cache by _dw_solve.
-#
-# TODO: this needs to add the shortest path when the direct edge doesn't exist
 def _dw_build_graph(T, terminals, u, G, memo, depth=0):
     indent = "  " * depth
     if len(terminals) == 1:
