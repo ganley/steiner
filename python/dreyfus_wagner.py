@@ -49,7 +49,6 @@ def _dw_solve(G: nx.Graph, terminals, u, apsp, memo={}):
         bestv = None
         bestsubset = None
         bestweight = apsp[u][terminals[0]]
-        bestw1 = bestweight
     else:
         assert len(terminals) > 1
         bestweight = maxweight

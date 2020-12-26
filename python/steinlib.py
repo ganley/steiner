@@ -45,8 +45,7 @@ def parse(f):
             if first == "SECTION":
                 section = rest[0]
                 if section == "MAXIMUMDEGREES":
-                    raise ParseError(
-                        line, "Section type {section} unsupported")
+                    raise ParseError(line, "Section type {section} unsupported")
             elif first == "END":
                 section = None
             elif first in ["NODES", "EDGES", "TERMINALS"]:
